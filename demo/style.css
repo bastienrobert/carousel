@@ -91,7 +91,7 @@ h3 {
 * Carousel exemple layout
 **********/
 
-.carousel {
+#demo {
   margin: 1.5em 0;
 }
 
@@ -99,12 +99,12 @@ h3 {
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 8px 18px 0px rgba(0, 0, 0, 0.06);
-  margin-bottom: 1em;
+  margin: 1em;
 }
 
 .item img {
   width: 100%;
-  height: 500px;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -122,4 +122,48 @@ h3 {
 .item__content-subtitle {
   display: block;
   color: #455172;
+}
+
+.carousel__navigation {
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: #FFF;
+  box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.06);
+  transition: box-shadow .2s;
+}
+
+.carousel__navigation:active {
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.06);
+}
+
+.carousel__navigation:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-top: solid 1px #f43078;
+  border-right: solid 1px #f43078;
+}
+
+.carousel__navigation-previous {
+  left: -15px;
+}
+
+.carousel__navigation-previous:after {
+  transform: translate(-35%, -55%) rotate(-135deg);
+}
+
+.carousel__navigation-next {
+  right: -15px;
+}
+
+.carousel__navigation-next:after {
+  transform: translate(-75%, -55%) rotate(45deg);
 }

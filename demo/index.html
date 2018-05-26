@@ -5,36 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Carousel - Demo</title>
+  <link rel="stylesheet" href="../lib/style.css">
   <link rel="stylesheet" href="style.css">
+  <script async src="../lib/main.js"></script>
 </head>
 <body>
   <h1>Carousel</h1>
   <div class="block">
     <h2>Some pictures</h2>
     <h3>Wow, there's some great picture there</h3>
-    <div class="carousel" data-carousel>
-      <div class="item" data-item>
+    <div id="demo">
+      <div class="item">
         <img src="https://source.unsplash.com/random">
         <div class="item__content">
-          <span class="item__content-title">Hello</span>
+          <span class="item__content-title">Hello #1</span>
           <span class="item__content-subtitle">I'm the subtitle</span>
         </div>
       </div>
-      <div class="item" data-item>
+      <div class="item">
         <img src="https://source.unsplash.com/random">
         <div class="item__content">
-          <span class="item__content-title">Hello</span>
+          <span class="item__content-title">Hello #2</span>
           <span class="item__content-subtitle">I'm the subtitle</span>
         </div>
       </div>
-      <div class="item" data-item>
+      <div class="item">
         <img src="https://source.unsplash.com/random">
         <div class="item__content">
-          <span class="item__content-title">Hello</span>
+          <span class="item__content-title">Hello #3</span>
+          <span class="item__content-subtitle">I'm the subtitle</span>
+        </div>
+      </div>
+      <div class="item">
+        <img src="https://source.unsplash.com/random">
+        <div class="item__content">
+          <span class="item__content-title">Hello #4</span>
+          <span class="item__content-subtitle">I'm the subtitle</span>
+        </div>
+      </div>
+      <div class="item">
+        <img src="https://source.unsplash.com/random">
+        <div class="item__content">
+          <span class="item__content-title">Hello #5</span>
           <span class="item__content-subtitle">I'm the subtitle</span>
         </div>
       </div>
     </div>
   </div>
+  <script>
+  window.addEventListener('load', () => {
+    new Carousel(document.querySelector('#demo'), {
+      itemsToScroll: 2,
+      itemsToShow: 2,
+      infinite: true
+    })
+  })
+  </script>
 </body>
 </html>

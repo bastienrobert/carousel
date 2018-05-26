@@ -1,0 +1,14 @@
+{
+  "name": "carousel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "doc": "jsdoc2md dist/main.js --template README.hbs --partial partials/*.hbs > README.md"
+  },
+  "author": "",
+  "license": "ISC"
+}
