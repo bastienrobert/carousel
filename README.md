@@ -33,6 +33,9 @@ window.addEventListener('load', () => {
     * [.animation(active)](#Carousel+animation)
     * [.translate(percent)](#Carousel+translate)
     * [.setNavigation()](#Carousel+setNavigation)
+    * [.setPagination()](#Carousel+setPagination)
+    * [.setDesktopPagination()](#Carousel+setDesktopPagination)
+    * [.setMobilePagination()](#Carousel+setMobilePagination)
     * [.navigate(to)](#Carousel+navigate)
     * [.onResize()](#Carousel+onResize)
     * [.onKeyUp(e)](#Carousel+onKeyUp)
@@ -54,6 +57,8 @@ window.addEventListener('load', () => {
 | [options.itemsToScrollOnMobile] | <code>number</code> | <code>1</code> | How many items will be scrolling each time on mobile |
 | [options.loop] | <code>boolean</code> | <code>false</code> | Loop and end of the slice |
 | [options.navigation] | <code>boolean</code> | <code>true</code> | Arrows to navigate in the slider |
+| [options.pagination] | <code>boolean</code> | <code>false</code> | Add pagination menu |
+| [options.mobilePagination] | <code>boolean</code> | <code>options.pagination</code> | Add pagination on mobile |
 | [options.infinite] | <code>boolean</code> | <code>false</code> | Infinite slider, you'll can't stop it :o |
 
 <a name="Carousel+itemsToScroll"></a>
@@ -122,6 +127,24 @@ translate - Translate the wrapper to slide
 
 ### carousel.setNavigation()
 setNavigation - Create navigation components to scroll in the carousel
+
+**Kind**: instance method of [<code>Carousel</code>](#Carousel)  
+<a name="Carousel+setPagination"></a>
+
+### carousel.setPagination()
+setPagination - Init the pagination following the options
+
+**Kind**: instance method of [<code>Carousel</code>](#Carousel)  
+<a name="Carousel+setDesktopPagination"></a>
+
+### carousel.setDesktopPagination()
+setDesktopPagination - Create pagination components (dots) on desktop
+
+**Kind**: instance method of [<code>Carousel</code>](#Carousel)  
+<a name="Carousel+setMobilePagination"></a>
+
+### carousel.setMobilePagination()
+setMobilePagination - Create pagination components (dots) on mobile
 
 **Kind**: instance method of [<code>Carousel</code>](#Carousel)  
 <a name="Carousel+navigate"></a>

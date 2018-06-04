@@ -13,6 +13,8 @@ class Carousel {
 	 * @param  {number} [options.itemsToScrollOnMobile=1] How many items will be scrolling each time on mobile
 	 * @param  {boolean} [options.loop=false] Loop and end of the slice
 	 * @param  {boolean} [options.navigation=true] Arrows to navigate in the slider
+	 * @param  {boolean} [options.pagination=false] Add pagination menu
+	 * @param  {boolean} [options.mobilePagination=options.pagination] Add pagination on mobile
 	 * @param  {boolean} [options.infinite=false] Infinite slider, you'll can't stop it :o
 	 */
 	constructor(el, options = {}) {
@@ -26,6 +28,8 @@ class Carousel {
 				itemsToScrollOnMobile: 1,
 				loop: false,
 				navigation: true,
+				pagination: false,
+				mobilePagination: false || options.pagination,
 				infinite: false
 			},
 			options
@@ -33,6 +37,7 @@ class Carousel {
 		this.isMobile = false
 		this.animating = false
 		this.currentItem = 0
+		this.offset = 0
 		this.moveCallbacks = []
 		this.init()
 	}
@@ -41,7 +46,8 @@ class Carousel {
 		this.DOMSetup()
 		this.setStyles()
 		this.options.navigation && this.setNavigation()
-		this.moveCallbacks.forEach(callback => callback(this.currentItem))
+		this.options.pagination && this.setPagination()
+		this.moveCallbacks.map(callback => callback(this.currentItem))
 
 		this.onResize()
 		window.addEventListener('resize', this.onResize.bind(this))
@@ -59,22 +65,22 @@ class Carousel {
 		const children = [].slice.call(this.el.children)
 
 		this.root = document.createElement('div')
-		this.root.setAttribute('class', 'carousel')
-		this.root.setAttribute('tabindex', '0')
+		this.root.className = 'carousel'
+		this.root.tabIndex = 0
 		this.el.appendChild(this.root)
 		this.root.addEventListener('keyup', e => this.onKeyUp(e))
 
 		let mask = document.createElement('div')
-		mask.setAttribute('class', 'carousel__mask')
+		mask.className = 'carousel__mask'
 		this.root.appendChild(mask)
 
 		this.wrapper = document.createElement('div')
-		this.wrapper.setAttribute('class', 'carousel__wrapper')
+		this.wrapper.className = 'carousel__wrapper'
 		mask.appendChild(this.wrapper)
 
 		this.items = children.map(child => {
 			let item = document.createElement('div')
-			item.setAttribute('class', 'carousel__item')
+			item.className = 'carousel__item'
 			item.appendChild(child)
 			return item
 		})
@@ -129,10 +135,7 @@ class Carousel {
 		let buttons = {}
 		;['previous', 'next'].map(className => {
 			let button = document.createElement('span')
-			button.setAttribute(
-				'class',
-				`carousel__navigation carousel__navigation-${className}`
-			)
+			button.className = `carousel__navigation carousel__navigation-${className}`
 			button.addEventListener('click', this.navigate.bind(this, className))
 			this.root.appendChild(button)
 			buttons[className] = button
@@ -147,6 +150,88 @@ class Carousel {
 					? buttons.next.classList.add('carousel__navigation-hidden')
 					: buttons.next.classList.remove('carousel__navigation-hidden')
 			})
+	}
+
+	/**
+	 * setPagination - Init the pagination following the options
+	 */
+	setPagination() {
+		this.setDesktopPagination()
+		this.options.mobilePagination && this.setMobilePagination()
+	}
+
+	/**
+	 * setDesktopPagination - Create pagination components (dots) on desktop
+	 */
+	setDesktopPagination() {
+		let pagination = document.createElement('div')
+		pagination.className = 'carousel__pagination'
+		let buttons = []
+		this.root.appendChild(pagination)
+		for (
+			let i = 0;
+			i < this.items.length - 2 * this.offset;
+			i = i + this.options.itemsToScroll
+		) {
+			let button = document.createElement('div')
+			button.className = 'carousel__pagination-button'
+			button.addEventListener('click', () => this.goto(i + this.offset))
+			pagination.appendChild(button)
+			buttons.push(button)
+		}
+		this.onMove(i => {
+			const length = this.items.length - 2 * this.offset
+			const active =
+				buttons[
+					Math.floor(((i - this.offset) % length) / this.options.itemsToScroll)
+				]
+			buttons.map(button =>
+				button.classList.remove('carousel__pagination-button-active')
+			)
+			active && active.classList.add('carousel__pagination-button-active')
+		})
+	}
+
+	/**
+	 * setMobilePagination - Create pagination components (dots) on mobile
+	 */
+	setMobilePagination() {
+		let pagination = document.createElement('div')
+		pagination.className = 'carousel__pagination carousel__pagination_mobile'
+		let buttons = []
+		this.root.appendChild(pagination)
+		for (
+			let i = 0;
+			i < this.items.length - 2 * this.offset;
+			i = i + this.options.itemsToScrollOnMobile
+		) {
+			let button = document.createElement('div')
+			button.className =
+				'carousel__pagination-button carousel__pagination_mobile-button'
+			button.addEventListener('click', () => this.goto(i + this.offset))
+			pagination.appendChild(button)
+			buttons.push(button)
+		}
+		this.onMove(i => {
+			const length = this.items.length - 2 * this.offset
+			const active =
+				buttons[
+					Math.floor(
+						((i - this.offset) % length) / this.options.itemsToScrollOnMobile
+					)
+				]
+			buttons.map(button =>
+				button.classList.remove(
+					'carousel__pagination-button-active',
+					'carousel__pagination_mobile-button-active'
+				)
+			)
+			active &&
+				active.classList.add(
+					'carousel__pagination-button-active',
+					'carousel__pagination_mobile-button-active'
+				)
+		})
 	}
 
 	/**
@@ -166,7 +251,7 @@ class Carousel {
 	 * onResize - Event window resize
 	 */
 	onResize() {
-		const mobile = window.innerWidth < 800
+		const mobile = window.innerWidth <= 800
 		if (mobile !== this.isMobile) {
 			this.isMobile = mobile
 			this.setStyles()

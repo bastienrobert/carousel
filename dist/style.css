@@ -63,3 +63,49 @@
 .carousel__navigation-next:after {
   transform: translate(-75%, -55%) rotate(45deg);
 }
+
+.carousel__pagination {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carousel__pagination_mobile {
+  display: none;
+}
+
+.carousel__pagination-button {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: #000;
+  border-radius: 100%;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.carousel__pagination_mobile-button {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 100%;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.carousel__pagination-button:hover,
+.carousel__pagination-button.carousel__pagination-button-active {
+  opacity: .8;
+}
+
+@media screen and (max-width: 800px) {
+  .carousel__pagination {
+    display: none;
+  }
+  .carousel__pagination_mobile {
+    display: block;
+  }
+}
