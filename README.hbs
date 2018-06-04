@@ -5,6 +5,9 @@ Dead simple carousel.
 ## Install
 Clearly not ready for now, it will be a NPM module in few weeks, be patient.
 
+## Example
+An example is disponible, you can try it but you'll need Gulp to customize.
+
 ## Usage
 It's (really) dead simple, actually (it'll change when it'll be on NPM) :
 ```HTML
