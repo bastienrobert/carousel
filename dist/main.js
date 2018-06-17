@@ -16,6 +16,7 @@ class Carousel {
    * @param  {boolean} [options.pagination=false] Add pagination menu
    * @param  {boolean} [options.mobilePagination=options.pagination] Add pagination on mobile
    * @param  {boolean} [options.infinite=false] Infinite slider, you'll can't stop it :o
+   * @param  {boolean} [options.touchable=true] Infinite slider, you'll can't stop it :o
    */
   constructor(el, options = {}) {
     this.el = el
@@ -30,7 +31,8 @@ class Carousel {
         navigation: true,
         pagination: false,
         mobilePagination: false || options.pagination,
-        infinite: false
+        infinite: false,
+				touchable: true
       },
       options
     )
@@ -55,7 +57,7 @@ class Carousel {
       'transitionend',
       this.wrapperTransitionEnd.bind(this)
     )
-    new CarouselTouch(this)
+    this.options.touchable && new CarouselTouch(this)
   }
 
   /**
@@ -132,8 +134,8 @@ class Carousel {
    * setNavigation - Create navigation components to scroll in the carousel
    */
   setNavigation() {
-    let buttons = {}
-    ;['previous', 'next'].map(className => {
+    let buttons = {};
+    ['previous', 'next'].map(className => {
       let button = document.createElement('span')
       button.className = `carousel__navigation carousel__navigation-${className}`
       button.addEventListener('click', this.navigate.bind(this, className))
@@ -287,7 +289,7 @@ class Carousel {
    */
   goto(index, animation = true) {
     if (this.animating === false) {
-      // animation === true && (this.animating = true)
+      animation && (this.animating = true)
       index < 0 && (index = this.items.length - 1)
 
       if (
@@ -462,5 +464,6 @@ class CarouselTouch {
       }
     }
     this.origin = null
+    this.carousel.animating = false
   }
 }

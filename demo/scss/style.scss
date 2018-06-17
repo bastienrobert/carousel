@@ -54,6 +54,7 @@ h3 {
 
 #demo {
   margin: 1.5em 0;
+  user-select: none;
 }
 
 .item {
@@ -82,6 +83,13 @@ h3 {
   }
 }
 
+.carousel__mask {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 .carousel__navigation {
   display: block;
   position: absolute;
@@ -93,6 +101,7 @@ h3 {
   background-color: $white;
   box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.06);
   transition: box-shadow .2s;
+  cursor: pointer;
   &:active {
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.06);
   }
